@@ -1,2 +1,4 @@
-for i in range(100-1, -1, -1):
-    print(i)
+def foo(color):
+    print(color)
+
+foo((0,1,2))
