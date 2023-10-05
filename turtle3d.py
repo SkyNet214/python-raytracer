@@ -36,6 +36,35 @@ def rotate_y(point, angle):
     point = np.array(point, dtype=np.float32)
     return tuple(np.matmul(point, matrix))
 
+def cube(x, y, z, a):
+    cube = [
+        (x, y, z),
+        (x + a, y, z),
+        (x + a, y + a, z),
+        (x, y + a, z),
+        (x, y, z + a),
+        (x + a, y, z + a),
+        (x + a, y + a, z + a),
+        (x, y + a, z + a)
+    ]
+    edges_i = [
+        (1, 2),
+        (2, 3),
+        (3, 4),
+        (4, 1),
+        (1, 5),
+        (2, 6),
+        (3, 7),
+        (4, 8),
+        (5, 6),
+        (6, 7),
+        (7, 8),
+        (8, 5)
+    ]
+    
+    return [(cube[e[0], e[1]]) for e in edges_i]
+
+
 # draw a cube on the canvas, given the x, y, z of the bottom left front point and the side length
 def draw_cube(x, y, z, a, rotX, rotY):
     cube = [
@@ -76,6 +105,39 @@ def draw_cube(x, y, z, a, rotX, rotY):
         t.pendown()
         t.goto(cube_2d[e[1]-1])
 
+# draw a pyramid on the canvas, given the x, y, z of the bottom left front point and the side length
+def draw_pyramid(x, y, z, a, rotX, rotY):
+    points = [
+        (x, y, z),
+        (x + a, y, z),
+        (x + a, y, z + a),
+        (x, y, z + a),
+        (x + a/2, y + a, z + a/2)
+    ]
+    edges = [
+        (1, 2),
+        (2, 3),
+        (3, 4),
+        (4, 1),
+        (1, 5),
+        (2, 5),
+        (3, 5),
+        (4, 5)
+    ]
+    for i in range(len(points)):
+        points[i] = rotate_y(rotate_x(points[i], rotX), rotY)
+        
+        #rotate_x(cube[i], math.pi/4)
+    cube_2d = []
+    for i in range(len(points)):
+        cube_2d.append((project_point(points[i])))
+
+    for e in edges:
+        t.penup()
+        t.goto(cube_2d[e[0]-1])
+        t.pendown()
+        t.goto(cube_2d[e[1]-1])
+
 def draw_x():
     p1 = (-500, 0 ,0)
     p2 = (500, 0, 0)
@@ -101,7 +163,7 @@ rotY = 0
 while True:
     draw_x()
     draw_y()
-    draw_cube(-100, -100, -100, 200, rotX, rotY)
+    draw_pyramid(-100, -100, -100, 200, rotX, rotY)
     rotX += 0.2
     rotY += 0.2
     time.sleep(0.01)
