@@ -46,3 +46,5 @@ pip install numpy pygame pillow
 
 ## Output
 The offline raytracer (`raytracer.py`) generates an `output.png` file in the root directory showing the rendered scene.
+
+![Example Output](output.png)
