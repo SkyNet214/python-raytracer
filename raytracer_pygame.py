@@ -4,7 +4,6 @@ import pygame
 pygame.init()
 
 class Vec:
-    
     def __init__(self, x: float, y: float, z: float):
         self.x = x
         self.y = y
@@ -75,7 +74,7 @@ class Sphere:
 
 # image
 ASPECT_RATIO = 16 / 9
-WIDTH = 200
+WIDTH = 1000
 HEIGHT = int(WIDTH / ASPECT_RATIO)
 #img = Image.new(mode="RGB", size=(WIDTH, HEIGHT))
 
